@@ -26,8 +26,8 @@ export class CustomersService {
             customer.age = customerDTO.age;
             customer.username = customerDTO.username;
             customer.password = customerDTO.password;
-            const c = await this.customersRepository.save(customer)
-            if (!customer) {
+            const c = await this.customersRepository.save(customer);
+            if (!c) {
                 throw new NotFoundException('Customer has not been added');
             }
             return c;
