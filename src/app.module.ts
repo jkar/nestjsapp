@@ -7,6 +7,8 @@ import { CustomerModule } from './customers/customer.module';
 import { Customer } from './Entities/Customer.entity';
 import { Product } from './Entities/Product.entity';
 import { ProductsModule } from './products/products.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [CustomerModule, ProductsModule, TypeOrmModule.forRoot(
@@ -20,7 +22,7 @@ import { ProductsModule } from './products/products.module';
     entities: [Customer, Product],
     synchronize: true,
   }
-  )],
+  ), AuthModule, UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
