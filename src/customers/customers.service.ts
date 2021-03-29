@@ -24,11 +24,26 @@ export class CustomersService {
             customer.name = customerDTO.name;
             customer.lastname = customerDTO.lastname;
             customer.age = customerDTO.age;
+            customer.username = customerDTO.username;
+            customer.password = customerDTO.password;
             const c = await this.customersRepository.save(customer)
             if (!customer) {
                 throw new NotFoundException('Customer has not been added');
             }
             return c;
+        } catch (err) {
+            throw new NotFoundException(err);
+        }
+    }
+
+    async getCustomerByUsername(name: string): Promise<Customer | undefined> {
+        try {
+            const customer = await this.customersRepository.findOne({ where: { username: name } });
+            if (!customer) {
+                throw new NotFoundException('Customer not found');
+            } else {
+                return customer;
+            }
         } catch (err) {
             throw new NotFoundException(err);
         }
