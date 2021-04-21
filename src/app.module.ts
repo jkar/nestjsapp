@@ -9,6 +9,8 @@ import { Product } from './Entities/Product.entity';
 import { ProductsModule } from './products/products.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { Role } from './Entities/Role.entity';
+import { CustomerHasRole } from './Entities/CustomerHasRole.entity';
 
 @Module({
   imports: [CustomerModule, ProductsModule, TypeOrmModule.forRoot(
@@ -19,7 +21,7 @@ import { UsersModule } from './users/users.module';
     username: 'root',
     password: '1234',
     database: 'nestapp',
-    entities: [Customer, Product],
+    entities: [Customer, Product, Role, CustomerHasRole],
     synchronize: true,
   }
   ), AuthModule, UsersModule],

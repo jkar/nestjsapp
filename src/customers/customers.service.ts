@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Customer } from "src/Entities/Customer.entity";
 import { Product } from "src/Entities/Product.entity";
 import { ProductsService } from "src/products/products.service";
-import { Repository } from "typeorm";
+import { Connection, Repository } from "typeorm";
 import { CustomerDTO } from "./customer.model";
 
 @Injectable()
@@ -12,7 +12,8 @@ export class CustomersService {
         @InjectRepository(Customer)
         private customersRepository: Repository<Customer>,
         @Inject(forwardRef(() => ProductsService))
-        private productsService: ProductsService
+        private productsService: ProductsService,
+        private connection: Connection
       ) {}
 
     // async addCustomer(name: string, lastname: string, age: number): Promise<Customer> {
@@ -38,7 +39,15 @@ export class CustomersService {
 
     async getCustomerByUsername(name: string): Promise<Customer | undefined> {
         try {
-            const customer = await this.customersRepository.findOne({ where: { username: name } });
+            // const customer = await this.customersRepository.findOne({ where: { username: name } });
+            const customer = await this.customersRepository.
+                                        findOne({relations: ["roles"], where: { username: name } });
+            // const customer = await this.connection
+            // .getRepository(Customer)
+            // .createQueryBuilder("customer")
+            // .leftJoinAndSelect("customer.roles", "role")
+            // .getOne();
+
             if (!customer) {
                 throw new NotFoundException('Customer not found');
             } else {

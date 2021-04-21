@@ -8,18 +8,18 @@ export type User = any;
 export class UsersService {
   constructor(private readonly customersService: CustomersService) {}
 
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'john',
-      password: 'changeme',
-    },
-    {
-      userId: 2,
-      username: 'maria',
-      password: 'guess',
-    },
-  ];
+  // private readonly users = [
+  //   {
+  //     userId: 1,
+  //     username: 'john',
+  //     password: 'changeme',
+  //   },
+  //   {
+  //     userId: 2,
+  //     username: 'maria',
+  //     password: 'guess',
+  //   },
+  // ];
 
   async findOne(username: string): Promise<User | undefined> {
     return await this.customersService.getCustomerByUsername(username);

@@ -1,5 +1,8 @@
 import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
+import { Role } from "src/roles/role.enum";
+import { Roles } from "src/roles/roles.decorator";
+import { RolesGuard } from "src/roles/roles.guard";
 import { ProductDTO } from "./productDTO";
 import { ProductsService } from "./products.service";
 
@@ -9,12 +12,14 @@ export class ProductsController {
 
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(Role.User)
     @Get()
     async findAll() {
         return await this.productsService.findAll();
     }
 
+    
     @Post()
     async addProduct(
         @Body() productDto: ProductDTO

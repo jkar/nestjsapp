@@ -1,5 +1,6 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Product } from "./Product.entity";
+import { Role } from "./Role.entity";
 
 @Entity({ name: "customer" })
 export class Customer {
@@ -27,4 +28,11 @@ export class Customer {
         //  { eager: true }
         )
     products: Product[];
+
+    // @ManyToMany(() => Role, role => role.customers)
+    // @JoinTable()
+    // roles: Role[];
+    @ManyToMany(() => Role)
+    @JoinTable()
+    roles: Role[];
 }
